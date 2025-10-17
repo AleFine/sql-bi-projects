@@ -1,0 +1,186 @@
+USE [master]
+GO
+/****** Object:  Database [TenebrosaMart]    Script Date: 24/10/2024 10:37:32 ******/
+CREATE DATABASE [TenebrosaMart]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'TenebrosaMart', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQL2019\MSSQL\DATA\TenebrosaMart.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'TenebrosaMart_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQL2019\MSSQL\DATA\TenebrosaMart_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [TenebrosaMart].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [TenebrosaMart] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [TenebrosaMart] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [TenebrosaMart] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [TenebrosaMart] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [TenebrosaMart] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [TenebrosaMart] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [TenebrosaMart] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [TenebrosaMart] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [TenebrosaMart] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [TenebrosaMart] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [TenebrosaMart] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [TenebrosaMart] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [TenebrosaMart] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [TenebrosaMart] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [TenebrosaMart] SET  DISABLE_BROKER 
+GO
+ALTER DATABASE [TenebrosaMart] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [TenebrosaMart] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [TenebrosaMart] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [TenebrosaMart] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [TenebrosaMart] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [TenebrosaMart] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [TenebrosaMart] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [TenebrosaMart] SET RECOVERY FULL 
+GO
+ALTER DATABASE [TenebrosaMart] SET  MULTI_USER 
+GO
+ALTER DATABASE [TenebrosaMart] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [TenebrosaMart] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [TenebrosaMart] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [TenebrosaMart] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [TenebrosaMart] SET DELAYED_DURABILITY = DISABLED 
+GO
+EXEC sys.sp_db_vardecimal_storage_format N'TenebrosaMart', N'ON'
+GO
+ALTER DATABASE [TenebrosaMart] SET QUERY_STORE = OFF
+GO
+USE [TenebrosaMart]
+GO
+/****** Object:  Table [dbo].[DimCliente]    Script Date: 24/10/2024 10:37:33 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DimCliente](
+	[KeyCliente] [int] IDENTITY(1,1) NOT NULL,
+	[RazonSocial] [varchar](50) NOT NULL,
+	[TipoCliente] [varchar](50) NOT NULL,
+	[Categoria] [varchar](50) NOT NULL,
+	[Zona] [varchar](50) NOT NULL,
+	[idCliente] [char](4) NOT NULL,
+ CONSTRAINT [PK_DimCliente] PRIMARY KEY CLUSTERED 
+(
+	[KeyCliente] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[DimEficiencia]    Script Date: 24/10/2024 10:37:33 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DimEficiencia](
+	[KeyEficiencia] [int] IDENTITY(1,1) NOT NULL,
+	[TipoPlazo] [varchar](50) NOT NULL,
+	[Plazo] [int] NOT NULL,
+	[idPlazo] [int] NOT NULL,
+ CONSTRAINT [PK_DimEficiencia] PRIMARY KEY CLUSTERED 
+(
+	[KeyEficiencia] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[DimOrganizacion]    Script Date: 24/10/2024 10:37:33 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DimOrganizacion](
+	[KeyOrganizacion] [int] IDENTITY(1,1) NOT NULL,
+	[Sectorista] [varchar](50) NOT NULL,
+	[Sucursal] [varchar](50) NOT NULL,
+	[idPersonal] [char](2) NOT NULL,
+ CONSTRAINT [PK_DimOrganizacion] PRIMARY KEY CLUSTERED 
+(
+	[KeyOrganizacion] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[DimProducto]    Script Date: 24/10/2024 10:37:33 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DimProducto](
+	[KeyProducto] [int] IDENTITY(1,1) NOT NULL,
+	[Marca] [varchar](50) NOT NULL,
+	[Linea] [varchar](50) NOT NULL,
+	[Proveedor] [varchar](50) NOT NULL,
+	[Producto] [varchar](50) NOT NULL,
+	[idProducto] [char](4) NOT NULL,
+ CONSTRAINT [PK_DimProducto] PRIMARY KEY CLUSTERED 
+(
+	[KeyProducto] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[DimSatisfaccion]    Script Date: 24/10/2024 10:37:33 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DimSatisfaccion](
+	[KeySatisfaccion] [int] IDENTITY(1,1) NOT NULL,
+	[NPS] [varchar](15) NOT NULL,
+	[Valor] [tinyint] NOT NULL,
+	[idValor] [tinyint] NOT NULL,
+ CONSTRAINT [PK_DimSatisfaccion] PRIMARY KEY CLUSTERED 
+(
+	[KeySatisfaccion] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[DimTiempo]    Script Date: 24/10/2024 10:37:33 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DimTiempo](
+	[KeyTiempo] [int] IDENTITY(1,1) NOT NULL,
+	[Anual] [int] NOT NULL,
+	[Semestre] [varchar](15) NOT NULL,
+	[Trimestre] [varchar](15) NOT NULL,
+	[Mes] [varchar](15) NOT NULL,
+	[DiaSemana] [varchar](15) NOT NULL,
+	[idFecha] [date] NOT NULL,
+ CONSTRAINT [PK_DimTiempo] PRIMARY KEY CLUSTERED 
+(
+	[KeyTiempo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+USE [master]
+GO
+ALTER DATABASE [TenebrosaMart] SET  READ_WRITE 
+GO
